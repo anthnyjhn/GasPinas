@@ -1,57 +1,52 @@
 import { useState, useEffect } from "react";
-import { useMap, MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import {
+  useMap,
+  Marker,
+  MapContainer,
+  TileLayer,
+  useMapEvents,
+  Popup,
+} from "react-leaflet";
 
+import MapTileLayer from "./MapTileLayer";
 import LocationPin from "../components/LocationPin";
 
-// Fix for default marker icons not showing in React
-import L from "leaflet";
-import icon from "leaflet/dist/images/marker-icon.png";
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import "leaflet/dist/leaflet.css";
+import "../style/Map.css";
 
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
-
-const DefaultZoom = 13;
-const canScrollWheelZoom = true;
-
+// mock db
 const locations = [
   {
     brand: "shell",
-    stationName: "station1",
+    stationLogo: "https://cdn.fuelcheck.nsw.gov.au/nsw/brands/bp_logo.png",
+    stationName: "Shell Dagupan",
     address: "2 sample street, town, city",
-    location: { lat: 11.5995, long: 120.9842 },
-    fuel: {
-      Diesel: 40.99,
-      Unleaded: 40.99,
-      Premium: 99.99,
-    },
+    location: { lat: 14.5995, lng: 120.9842 },
+    fuel: [
+      { Type: "Diesel", Price: 40.99 },
+      { Type: "Unleaded", Price: 40.99 },
+      { Type: "Premium", Price: 40.99 },
+    ],
   },
   {
     brand: "shell",
     stationName: "station2",
     address: "2 sample street, town, city",
-    location: { lat: 11.5995, long: 121.9842 },
-    fuel: {
-      Diesel: 40.99,
-      Unleaded: 40.99,
-      Premium: 99.99,
-    },
+    location: { lat: 11.5995, lng: 121.9842 },
+    fuel: [
+      { Type: "Diesel", Price: 40.99 },
+      { Type: "Unleaded", Price: 40.99 },
+      { Type: "Premium", Price: 40.99 },
+    ],
   },
 ];
 
 function UserLocation({ setUserPosition }) {
   const map = useMap();
 
-  useEffect(() => {
-    map.locate();
-  }, [map]);
+  // useEffect(() => {
+  //   map.locate();
+  // }, [map]);
 
   useMapEvents({
     locationfound(e) {
@@ -64,34 +59,28 @@ function UserLocation({ setUserPosition }) {
 }
 
 function Map() {
-  const [userPosition, setUserPosition] = useState({
-    lat: 12.8797,
-    lng: 121.774,
-  });
+  const defaultZoom = 13;
+  const canScrollWheelZoom = true;
+  const manila_pos = { lat: 14.5995, lng: 120.9842 }; // default position
+  const [userPosition, setUserPosition] = useState(manila_pos);
 
   return (
-    <div className="w-full h-screen overflow-hidden">
+    <div className="w-screen h-screen">
       <MapContainer
-        className="h-full w-full"
+        className="h-full w-full rounded-xl"
         center={userPosition}
-        zoom={DefaultZoom}
+        zoom={defaultZoom}
         scrollWheelZoom={canScrollWheelZoom}
       >
-        <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <MapTileLayer />
+        <Marker position={userPosition}>
+          <Popup>You are here!</Popup>
+        </Marker>
 
         <UserLocation setUserPosition={setUserPosition} />
 
         {locations.map((station) => (
-          <LocationPin
-            key={station.stationName}
-            location={{
-              lat: station.location.lat,
-              long: station.location.long,
-            }}
-          />
+          <LocationPin key={station.stationName} station={station} />
         ))}
       </MapContainer>
     </div>
