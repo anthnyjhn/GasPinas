@@ -20,7 +20,7 @@ tables and diagram
 ## API Design
 
 ```bash
-GET /stations?lat=&lng=&radius=&fuelType= # get stations within the range (res: long,lat,price,fuelType)
+GET /stations?lat=&lng=&radius=&fuelType= # get stations within the range (res: id, long,lat,price,fuelType)
 GET /station/:id # get station's details (res: brand, fuelType, price, timestamp, address)
 
 POST /submitPrice # send latest price (req: email, fuel type, price)
