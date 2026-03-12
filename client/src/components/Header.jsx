@@ -2,13 +2,16 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="w-full bg-blue-500 h-[100px]">
-      <h1 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "normal" }}>
-        <a href="/" style={{ textDecoration: "none", color: "white" }}>
-          <b>GAS</b>PINAS
-        </a>
-      </h1>
-    </header>
+    <div className="absolute top-0 left-0 w-full z-[1000] p-4 ">
+      <div className="bg-[#242424] backdrop-blur-md p-3 backdrop-blur-md bg-[rgba(10,10,10,0.81)] rounded-xl shadow text-center">
+        <h1 className="text-lg font-semibold text-white">
+          <a href="/">
+            {" "}
+            <b>Gas</b>Pinas
+          </a>
+        </h1>
+      </div>
+    </div>
   );
 };
 
