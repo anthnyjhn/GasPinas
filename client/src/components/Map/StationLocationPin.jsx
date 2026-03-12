@@ -10,6 +10,18 @@ const hiddenIcon = L.divIcon({
   iconAnchor: [25, 50],
 });
 
+const StationLocationPin = ({ station }) => {
+  const markerRef = useRef();
+
+  return (
+    <>
+      <Marker icon={hiddenIcon} position={station.location} ref={markerRef}>
+        <Tooltip station={station} markerRef={markerRef} />
+      </Marker>
+    </>
+  );
+};
+
 const LocationPin = ({ station }) => {
   const markerRef = useRef();
 
@@ -18,7 +30,13 @@ const LocationPin = ({ station }) => {
     <>
       <Marker icon={hiddenIcon} position={station.location} ref={markerRef}>
         <Tooltip station={station} markerRef={markerRef} />
-        <Popup offset={[0, -50]}>
+      </Marker>
+    </>
+  );
+};
+
+{
+  /* <Popup offset={[0, -50]}>
           <h1>{station.stationName}</h1>
           <p>{station.address}</p>
           {station.fuel.map((fuel, index) => (
@@ -26,10 +44,7 @@ const LocationPin = ({ station }) => {
               {fuel.Type}: ₱{fuel.Price}
             </li>
           ))}
-        </Popup>
-      </Marker>
-    </>
-  );
-};
+        </Popup> */
+}
 
-export default LocationPin;
+export default StationLocationPin;
