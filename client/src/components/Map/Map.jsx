@@ -4,7 +4,8 @@ import { useMap, MapContainer, useMapEvents, ZoomControl } from "react-leaflet";
 import MapTileLayer from "./MapTileLayer";
 import StationLocationPin from "./StationLocationPin";
 import UserLocationPin from "./UserLocationPin";
-import MapControl from "./MapControl";
+import LocateButton from "./LocateButton";
+import BottomToolbar from "./BottomToolbar";
 
 import "leaflet/dist/leaflet.css";
 import "../../style/Map.css";
@@ -51,7 +52,7 @@ function Map() {
   ];
 
   return (
-    <div className="w-screen h-[100dvh] relative">
+    <div className="w-screen h-dvh relative">
       <MapContainer
         className="h-full w-full"
         center={userLocation}
@@ -69,17 +70,14 @@ function Map() {
       >
         <MapTileLayer />
 
+        <ZoomControl position="topleft" />
         <UserLocationPin userLocation={userLocation} />
-        <MapControl setUserLocation={setUserLocation} />
+        <LocateButton setUserLocation={setUserLocation} />
+        <BottomToolbar />
 
         {nearbyStations.map((station) => (
           <StationLocationPin key={station.id} station={station} />
         ))}
-
-        <ZoomControl
-          position="bottomright"
-          className="bg-red-50 backdrop-blur-md"
-        />
       </MapContainer>
     </div>
   );
