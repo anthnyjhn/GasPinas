@@ -17,34 +17,20 @@ const StationLocationPin = ({ station }) => {
     <>
       <Marker icon={hiddenIcon} position={station.location} ref={markerRef}>
         <Tooltip station={station} markerRef={markerRef} />
+        <Popup offset={[0, -50]}>
+          <h1>Station Name</h1>
+          <p>13 San Isidro Norte, Binmaley, Pangasinan</p>
+          <div>
+            <ul>
+              <li>U91</li>
+              <li>U95</li>
+              <li>Diesel</li>
+            </ul>
+          </div>
+        </Popup>
       </Marker>
     </>
   );
 };
-
-const LocationPin = ({ station }) => {
-  const markerRef = useRef();
-
-  console.log(station);
-  return (
-    <>
-      <Marker icon={hiddenIcon} position={station.location} ref={markerRef}>
-        <Tooltip station={station} markerRef={markerRef} />
-      </Marker>
-    </>
-  );
-};
-
-{
-  /* <Popup offset={[0, -50]}>
-          <h1>{station.stationName}</h1>
-          <p>{station.address}</p>
-          {station.fuel.map((fuel, index) => (
-            <li key={index}>
-              {fuel.Type}: ₱{fuel.Price}
-            </li>
-          ))}
-        </Popup> */
-}
 
 export default StationLocationPin;
