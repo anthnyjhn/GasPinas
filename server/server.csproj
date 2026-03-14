@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Data/" />
+    <Folder Include="DTO/" />
+    <Folder Include="Middleware/" />
+    <Folder Include="Model/" />
+    <Folder Include="Routes/" />
+  </ItemGroup>
+
 </Project>
