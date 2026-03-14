@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const BottomToolbar = () => {
-  const [searchRadius, setSearchRadius] = useState(5);
+const BottomToolbar = ({ searchRadius, setSearchRadius }) => {
   const [fuelType, setFuelType] = useState("u91");
 
   const refreshMap = () => {
-    console.log(searchRadius, fuelType);
+    console.log(`Search for: ${fuelType} within ${searchRadius}km`);
   };
 
   const handlerSliderChange = (e) => {
@@ -31,7 +30,7 @@ const BottomToolbar = () => {
           <select
             name="fuelTypeInput"
             id=""
-            className=" w-full h-4/5 text-center text-[#AEAEAE] bg-[#242424] appearance-auto"
+            className=" w-full h-4/5 text-center text-[#AEAEAE] bg-none appearance-auto"
             onChange={handleFuelTypeChange}
             defaultValue={0}
           >
@@ -48,7 +47,7 @@ const BottomToolbar = () => {
         </div>
         <div className="pl-2 mx-2">
           <div className="mb-1">
-            <p className="text-[#AEAEAE] text-center">
+            <p className="text-[#AEAEAE] text-center text-xs sm:text-sm">
               Search Radius ({searchRadius}km)
             </p>
           </div>

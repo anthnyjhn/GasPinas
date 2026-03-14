@@ -6,6 +6,7 @@ import StationLocationPin from "./StationLocationPin";
 import UserLocationPin from "./UserLocationPin";
 import LocateButton from "./LocateButton";
 import BottomToolbar from "./BottomToolbar";
+import DistanceRadius from "./DistanceRadius";
 
 import "leaflet/dist/leaflet.css";
 import "../../style/Map.css";
@@ -46,6 +47,7 @@ function Map() {
   const canScrollWheelZoom = true;
   const manila_coordinates = { lat: 14.5995, lng: 120.9842 }; // default location
   const [userLocation, setUserLocation] = useState(manila_coordinates);
+  const [searchRadius, setSearchRadius] = useState(5);
   const philippinesBounds = [
     [4.5, 116.9], // South-West
     [21.5, 126.6], // North-East
@@ -62,23 +64,27 @@ function Map() {
         minZoom={5}
         scrollWheelZoom={canScrollWheelZoom}
         zoomControl={false}
-        zoomAnimation={true}
         markerZoomAnimation={true} // Markers will scale/fade during zoom
         fadeAnimation={true} // Tile layers will cross-fade
-        inertia={true} // Adds "momentum" when dragging the map
-        inertiaResistance={3000} // How quickly the map stops sliding
+        inertiaResistance={3000}
       >
         <MapTileLayer />
-
         <ZoomControl position="topleft" />
         <UserLocationPin userLocation={userLocation} />
+        <DistanceRadius
+          userLocation={userLocation}
+          radius={searchRadius * 1000}
+        />
         <LocateButton setUserLocation={setUserLocation} />
-        <BottomToolbar />
 
         {nearbyStations.map((station) => (
           <StationLocationPin key={station.id} station={station} />
         ))}
       </MapContainer>
+      <BottomToolbar
+        searchRadius={searchRadius}
+        setSearchRadius={setSearchRadius}
+      />
     </div>
   );
 }
