@@ -7,6 +7,8 @@ var app = builder.Build();
 
 const int PORT = 3000;
 
-app.StationRoute();
+app.StationsRoutes(); // route for multiple stations
+
+app.StationRoutes(); // route for single stations
 
 app.Run($"http://localhost:{PORT}");
